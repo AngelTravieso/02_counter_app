@@ -102,6 +102,8 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
+      // Habilita un sonido o vibracion al tocar el boton (varia depende del dispositivo)
+      enableFeedback: true,
       // Bordes redondeados
       shape: const StadiumBorder(),
       onPressed: onPressed,
