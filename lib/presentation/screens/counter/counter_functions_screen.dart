@@ -14,61 +14,59 @@ class _CounterFunctionsScreensState extends State<CounterFunctionsScreens> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Counter Functions Screen'),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.refresh_rounded),
-              onPressed: () {
-                setState(() {
-                  clickCounter = 0;
-                });
-              },
-            ),
-          ],
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                '$clickCounter',
-                style: const TextStyle(
-                  fontSize: 160,
-                  fontWeight: FontWeight.w100,
-                ),
-              ),
-              Text(
-                clickCounter != 1 ? 'Clicks' : 'Click',
-                style: const TextStyle(
-                  fontSize: 25,
-                ),
-              ),
-            ],
+      appBar: AppBar(
+        title: const Text('Counter Functions Screen'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh_rounded),
+            onPressed: () {
+              setState(() {
+                clickCounter = 0;
+              });
+            },
           ),
-        ),
-        floatingActionButton: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+        ],
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            FloatingActionButton(
-              shape: const StadiumBorder(),
-              onPressed: incrementCounter,
-              child: const Icon(Icons.refresh_outlined),
+            Text(
+              '$clickCounter',
+              style: const TextStyle(
+                fontSize: 160,
+                fontWeight: FontWeight.w100,
+              ),
             ),
-            const SizedBox(height: 10),
-            FloatingActionButton(
-              // StadiumBorder (borde circular)
-              shape: const StadiumBorder(),
-              onPressed: incrementCounter,
-              child: const Icon(Icons.plus_one),
-            ),
-            const SizedBox(height: 10),
-            FloatingActionButton(
-              onPressed: decrementCounter,
-              child: const Icon(Icons.exposure_minus_1),
+            Text(
+              clickCounter != 1 ? 'Clicks' : 'Click',
+              style: const TextStyle(
+                fontSize: 25,
+              ),
             ),
           ],
-        ));
+        ),
+      ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          CustomButton(
+            icon: Icons.refresh_outlined,
+            onPressed: resetCounter,
+          ),
+          const SizedBox(height: 10),
+          CustomButton(
+            icon: Icons.plus_one,
+            onPressed: incrementCounter,
+          ),
+          const SizedBox(height: 10),
+          CustomButton(
+            icon: Icons.exposure_minus_1,
+            onPressed: decrementCounter,
+          )
+        ],
+      ),
+    );
   }
 
   void incrementCounter() {
@@ -78,11 +76,36 @@ class _CounterFunctionsScreensState extends State<CounterFunctionsScreens> {
   }
 
   void decrementCounter() {
-    if (clickCounter == 0) {
-      return;
-    }
+    if (clickCounter == 0) return;
     setState(() {
       clickCounter--;
     });
+  }
+
+  void resetCounter() {
+    setState(() {
+      clickCounter = 0;
+    });
+  }
+}
+
+class CustomButton extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback onPressed;
+
+  const CustomButton({
+    super.key,
+    required this.icon,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      // Bordes redondeados
+      shape: const StadiumBorder(),
+      onPressed: onPressed,
+      child: Icon(icon),
+    );
   }
 }
